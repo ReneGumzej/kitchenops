@@ -309,6 +309,36 @@
     color: var(--on-surface-variant);
 }
 
+@media (max-width: 768px) {
+    .detail-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+    }
+    
+    .detail-hero {
+        flex-direction: column;
+        align-items: center;
+        gap: var(--spacing-xs);
+    }
+    
+    .detail-amount {
+        font-size: 2.5rem;
+    }
+    
+    .detail-unit {
+        font-size: 1.2rem;
+    }
+    
+    .detail-progress {
+        height: 8px;
+    }
+    
+    .detail-rows {
+        margin-top: var(--spacing-md);
+    }
+}
+
 .detail-progress {
     width: 100%;
     margin: 0 0 var(--spacing-sm);
@@ -424,6 +454,36 @@
     flex: 1;
 }
 
+@media (max-width: 768px) {
+    .suggestion-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-xs);
+    }
+    
+    .suggestion-item .einkaufsliste-actions {
+        flex-wrap: wrap;
+        gap: var(--spacing-xs);
+    }
+    
+    /* Einkaufsliste items */
+    .einkaufsliste-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-xs);
+    }
+    
+    .einkaufsliste-item .item-row {
+        width: 100%;
+    }
+    
+    .einkaufsliste-item .item-remove {
+        padding: var(--spacing-xs);
+        min-width: 36px;
+        min-height: 36px;
+    }
+}
+
 .suggestion-empty {
     display: flex;
     align-items: center;
@@ -457,6 +517,24 @@
 .kategorie-stats {
     display: flex;
     gap: var(--spacing-sm);
+}
+
+@media (max-width: 768px) {
+    .kategorie-title {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-sm);
+    }
+    
+    .kategorie-icon {
+        width: 32px;
+        height: 32px;
+        font-size: 0.9rem;
+    }
+    
+    .kategorie-stats {
+        flex-wrap: wrap;
+    }
 }
 
 /* -----------------------------------------------------------------------
@@ -666,6 +744,42 @@
 
 .generator-section {
     margin-bottom: var(--spacing-lg);
+}
+
+@media (max-width: 768px) {
+    .rezept-generator .card-body {
+        padding: var(--spacing-md);
+    }
+    
+    .generator-section {
+        margin-bottom: var(--spacing-md);
+    }
+    
+    #rezeptPrompt {
+        min-height: 100px;
+    }
+    
+    #generateBtn {
+        width: 100%;
+    }
+    
+    .generator-hint {
+        font-size: 0.85rem;
+    }
+    
+    /* Choice chips - make them wrap on small screens */
+    #essensKategorieChips,
+    #lebensmittelKategorieChips,
+    #anzahlChips {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    #essensKategorieChips .choice-chip,
+    #lebensmittelKategorieChips .choice-chip {
+        flex: 1 0 30%;
+        max-width: 150px;
+    }
 }
 
 .generator-label {
@@ -1003,6 +1117,25 @@
         max-width: 100%;
         margin: var(--spacing-sm);
     }
+    
+    /* Mobile optimizations for recipe cards and lists */
+    .rezept-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .rezept-card {
+        border-radius: var(--radius-md);
+    }
+    
+    /* Einkaufsliste */
+    .einkaufsfilter {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+    
+    .einkaufsfilter select {
+        width: 100%;
+    }
 }
 
 .gespeichert-liste {
@@ -1096,6 +1229,68 @@
 .gespeichert-delete-btn:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+}
+
+/* Mobile adjustments for saved recipes */
+@media (max-width: 768px) {
+    .gespeichert-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-sm);
+    }
+    
+    .gespeichert-actions {
+        flex-direction: row-reverse;
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .gespeichert-datum {
+        white-space: normal;
+    }
+    
+    .gespeichert-zutaten {
+        gap: 4px;
+    }
+    
+    .rezept-meta-chip {
+        font-size: 0.8rem;
+        padding: 2px 6px;
+    }
+    
+    /* Rezept card in modal */
+    .rezept-card {
+        padding: var(--spacing-md);
+    }
+    
+    .rezept-card-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-sm);
+    }
+    
+    .rezept-badges {
+        flex-wrap: wrap;
+        gap: var(--spacing-xs);
+    }
+    
+    .rezept-sectionen {
+        flex-direction: column;
+    }
+    
+    .zutaten-liste li {
+        flex-wrap: wrap;
+    }
+    
+    /* Einkaufsliste */
+    .einkaufsitem-actions {
+        flex-wrap: wrap;
+        gap: var(--spacing-xs);
+    }
+    
+    .einkaufsitem-actions .btn-icon {
+        padding: var(--spacing-xs);
+    }
 }
 
 .gespeichert-empty {

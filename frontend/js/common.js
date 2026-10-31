@@ -192,16 +192,29 @@ const Layout = {
         const sidebar = document.getElementById('sidebar');
         const mainContent = document.querySelector('.main-content');
 
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        
         document.getElementById('sidebarToggle')?.addEventListener('click', () => {
             sidebar.classList.toggle('open');
             mainContent?.classList.toggle('sidebar-open');
+            sidebarOverlay?.classList.toggle('active');
         });
         document.getElementById('mobileNavToggle')?.addEventListener('click', () => {
             sidebar.classList.add('open');
+            mainContent?.classList.add('sidebar-open');
+            sidebarOverlay?.classList.add('active');
         });
         document.getElementById('sidebarClose')?.addEventListener('click', () => {
             sidebar.classList.remove('open');
             mainContent?.classList.remove('sidebar-open');
+            sidebarOverlay?.classList.remove('active');
+        });
+        
+        // Close sidebar when clicking on overlay (mobile)
+        sidebarOverlay?.addEventListener('click', () => {
+            sidebar.classList.remove('open');
+            mainContent?.classList.remove('sidebar-open');
+            sidebarOverlay?.classList.remove('active');
         });
 
         // Aktiven Nav-Link anhand des Dateinamens markieren

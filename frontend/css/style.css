@@ -117,6 +117,12 @@ html {
     scroll-behavior: smooth;
 }
 
+@media (max-width: 480px) {
+    html {
+        font-size: 14px;
+    }
+}
+
 body {
     font-family: var(--font-secondary);
     background-color: var(--background);
@@ -247,7 +253,14 @@ img {
 /* Mobile Sidebar Overlay */
 @media (max-width: 768px) {
     .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 280px;
+        height: 100%;
         transform: translateX(-100%);
+        z-index: var(--z-sidebar);
+        transition: transform var(--transition-normal);
     }
     
     .sidebar.open {
@@ -272,11 +285,29 @@ img {
     z-index: calc(var(--z-sidebar) + 1);
     background-color: var(--primary);
     color: white;
-    width: 44px;
-    height: 44px;
+    width: 48px;
+    height: 48px;
     border-radius: var(--radius-full);
     font-size: 1.2rem;
     box-shadow: var(--shadow-lg);
+}
+
+/* Mobile Sidebar Overlay - closes sidebar when clicked */
+@media (max-width: 768px) {
+    .sidebar-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: calc(var(--z-sidebar) - 1);
+    }
+    
+    .sidebar-overlay.active {
+        display: block;
+    }
 }
 
 /* Main Content */
@@ -747,6 +778,21 @@ img {
 
 .table tr:hover {
     background-color: rgba(0, 0, 0, 0.02);
+}
+
+@media (max-width: 768px) {
+    /* Make table cells more compact on mobile */
+    .table th,
+    .table td {
+        padding: var(--spacing-xs) var(--spacing-sm);
+        font-size: 0.85rem;
+        white-space: nowrap;
+    }
+    
+    .table th {
+        font-size: 0.75rem;
+        letter-spacing: 0.3px;
+    }
 }
 
 .table tbody tr.selected {
@@ -1382,7 +1428,7 @@ img {
 
 @media (max-width: 768px) {
     .page-content {
-        padding: var(--spacing-md);
+        padding: var(--spacing-sm);
     }
     
     .stats-grid {
@@ -1415,15 +1461,263 @@ img {
     
     .top-bar {
         padding: var(--spacing-md);
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--spacing-sm);
+    }
+    
+    .top-bar-left,
+    .top-bar-right {
+        justify-content: space-between;
     }
     
     .search-box input {
-        width: 150px;
+        width: 100%;
     }
     
     .h1, h1 {
         font-size: 1.8rem;
     }
+    
+    .p, p {
+        font-size: 0.95rem;
+    }
+}
+
+/* -----------------------------------------------------------------------
+   Mobile Enhancements for Smartphones (Nothing Phone 1 ~ 390px width)
+   ----------------------------------------------------------------------- */
+@media (max-width: 768px) {
+    /* Better touch targets for buttons */
+    .btn {
+        min-height: 44px;
+        padding: var(--spacing-sm) var(--spacing-lg);
+        font-size: 0.95rem;
+    }
+    
+    .btn-icon {
+        min-width: 44px;
+        min-height: 44px;
+        padding: var(--spacing-xs);
+    }
+    
+    /* Better form inputs for mobile */
+    .form-control,
+    .form-textarea,
+    select,
+    input[type="text"],
+    input[type="number"],
+    input[type="password"],
+    input[type="email"] {
+        padding: var(--spacing-sm) var(--spacing-md);
+        font-size: 1rem;
+        min-height: 44px;
+    }
+    
+    /* Full-width modal on mobile */
+    .modal {
+        width: calc(100% - var(--spacing-xl));
+        max-height: 90vh;
+        margin: var(--spacing-lg) auto;
+    }
+    
+    .modal-breit {
+        width: calc(100% - var(--spacing-md));
+        margin: var(--spacing-md) auto;
+    }
+    
+    /* Full-width sidebar on mobile when open */
+    .sidebar.open {
+        width: 100%;
+    }
+    
+    .main-content.sidebar-open {
+        margin-left: 100%;
+    }
+    
+    /* Prevent horizontal scrolling */
+    .page-content {
+        overflow-x: hidden;
+    }
+    
+    /* Choice chips - better for touch */
+    .choice-chip {
+        padding: var(--spacing-sm) var(--spacing-md);
+        font-size: 0.85rem;
+    }
+    
+    /* Rezept cards - stack on mobile */
+    .rezept-card-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-sm);
+    }
+    
+    .rezept-sectionen {
+        flex-direction: column;
+        gap: var(--spacing-md);
+    }
+    
+    .rezept-section {
+        width: 100%;
+    }
+    
+    /* Einkaufsliste items */
+    .einkaufsitem {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-xs);
+    }
+    
+    /* Lebensmittel grid */
+    .lebensmittel-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Extra small devices (Nothing Phone 1 is ~390px) */
+@media (max-width: 480px) {
+    /* Make touch targets even larger */
+    .btn {
+        min-height: 48px;
+        padding: var(--spacing-md) var(--spacing-lg);
+    }
+    
+    .btn-icon {
+        min-width: 48px;
+        min-height: 48px;
+    }
+    
+    /* Sidebar tweaks */
+    .sidebar {
+        width: 100%;
+    }
+    
+    .sidebar-header {
+        padding: var(--spacing-md);
+    }
+    
+    .nav-link {
+        padding: var(--spacing-md) var(--spacing-lg);
+        font-size: 0.95rem;
+    }
+    
+    /* Form adjustments */
+    .form-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    /* Card padding */
+    .card {
+        padding: var(--spacing-md);
+    }
+    
+    /* Badges */
+    .badge {
+        font-size: 0.75rem;
+        padding: 2px 6px;
+    }
+    
+    /* Toast */
+    .toast {
+        font-size: 0.9rem;
+        padding: var(--spacing-sm) var(--spacing-md);
+    }
+    
+    /* Modal */
+    .modal {
+        width: calc(100% - var(--spacing-md));
+        margin: var(--spacing-md) auto;
+    }
+    
+    /* Disable hover effects on touch devices */
+    @media (hover: none) and (pointer: coarse) {
+        * {
+            outline: none;
+        }
+        
+        .btn:hover,
+        .card:hover,
+        .nav-link:hover {
+            transform: none;
+            box-shadow: none;
+        }
+        
+        /* Active states instead */
+        .btn:active,
+        .card:active,
+        .nav-link:active {
+            transform: scale(0.98);
+            opacity: 0.9;
+        }
+    }
+}
+
+/* ============================================================================
+   Touch & Mobile Optimizations
+   ============================================================================ */
+
+/* Prevent text selection on buttons and interactive elements */
+.btn,
+.btn-icon,
+.choice-chip,
+.nav-link,
+.einkaufsitem,
+.gespeichert-item,
+.rezept-card,
+.modal {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    tap-highlight-color: transparent;
+}
+
+/* Allow text selection in content areas */
+.rezept-section,
+.schritte-liste,
+.zutaten-liste,
+.form-control,
+.form-textarea {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+}
+
+/* Prevent zooming on input focus (iOS) */
+input,
+select,
+textarea {
+    font-size: 16px;
+}
+
+input[type="number"],
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="search"],
+select,
+textarea {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+/* iOS specific - prevent overscroll bounce */
+body {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: contain;
+    overflow-x: hidden;
+}
+
+/* Focus styles for accessibility */
+:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
 }
 
 /* -----------------------------------------------------------------------
