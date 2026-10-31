@@ -34,6 +34,60 @@ Alle KI-Funktionen (Rezept-Generierung, Kategorisierung, Freitext-Erfassung)
 nutzen strukturierte Ausgaben (JSON-Schema) und laufen identisch über alle
 Anbieter.
 
+## 💻 Lokal entwickeln / Bauen
+
+Das Backend benötigt **CGO** (sqlite3), daher wird ein C-Compiler benötigt:
+
+| Plattform | Compiler | Installation |
+|-----------|----------|--------------|
+| Linux | GCC | `sudo apt-get install build-essential` (Debian/Ubuntu) |
+| macOS | Clang | `xcode-select --install` |
+| Windows | GCC/MinGW | [TDM-GCC](https://jmeubank.github.io/tdm-gcc/) oder MSYS2 |
+
+### Einfaches Bauen
+
+```bash
+# Baue für die aktuelle Plattform (automatische Erkennung)
+make
+
+# Baue und starte sofort
+make run
+```
+
+### Plattform-spezifischer Build
+
+```bash
+# Für Linux (x86_64)
+make build-linux
+
+# Für Linux (ARM64, z.B. Raspberry Pi)
+make build-linux-arm64
+
+# Für macOS (Intel)
+make build-darwin
+
+# Für macOS (Apple Silicon)
+make build-darwin-arm64
+
+# Für Windows (x86_64)
+make build-windows
+
+# Für ALLE Plattformen
+make all
+```
+
+Die Binaries landen im Verzeichnis `bin/`.
+
+### Mit Docker bauen
+
+```bash
+# Standard: Linux-Binary (für Container)
+docker build -t kitchenops:latest .
+
+# Für eine spezifische Plattform
+docker build --build-arg GOOS=darwin --build-arg GOARCH=arm64 -t kitchenops:mac .
+```
+
 ## 🚀 Deployment mit Docker (Heimnetzwerk)
 
 Der komplette Stack läuft mit einem Befehl und ist im Heimnetzwerk unter

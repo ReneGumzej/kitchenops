@@ -594,6 +594,38 @@ const LebensmittelForm = {
 };
 
 // =========================================================================
+// ALLGEMEINE BESTÄTIGUNGS-DIALOG
+// =========================================================================
+// UI.confirm zeigt einen Modal-Dialog mit Ja/Nein und löst ein Promise auf.
+// @param {string} message - Bestätigungsnachricht (HTML wird escaped)
+// @returns {Promise<boolean>} - true = bestätigt, false = abgebrochen
+UI.confirm = async function(message) {
+    return new Promise((resolve) => {
+        Modal.open({
+            title: 'Bestätigung erforderlich',
+            content: `
+                <div class="confirm-dialog">
+                    <i class="fas fa-question-circle confirm-icon"></i>
+                    <p>${UI.escapeHtml(message)}</p>
+                </div>`,
+            footer: `
+                <button class="btn btn-outline" id="confirmCancelBtn">Abbrechen</button>
+                <button class="btn btn-primary" id="confirmOkBtn"><i class="fas fa-check"></i> Ja, bestätigen</button>`
+        });
+
+        document.getElementById('confirmCancelBtn').addEventListener('click', () => {
+            Modal.close();
+            resolve(false);
+        });
+
+        document.getElementById('confirmOkBtn').addEventListener('click', () => {
+            Modal.close();
+            resolve(true);
+        });
+    });
+};
+
+// =========================================================================
 // LÖSCH-BESTÄTIGUNG
 // =========================================================================
 async function confirmDelete(id) {

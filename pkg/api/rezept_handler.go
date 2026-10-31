@@ -465,3 +465,27 @@ func (handler *RezeptHandler) KategorisierenLebensmittel(ctx fiber.Ctx) error {
 		Offen:     offen,
 	})
 }
+
+// DeleteRezeptByID (DELETE /rezepte/:id) löscht ein Rezept aus der DB.
+func (handler *RezeptHandler) DeleteRezeptByID(ctx fiber.Ctx) error {
+	id := ctx.Params("id")
+
+	var rezept models.Rezept
+	if err := handler.db.First(&rezept, id).Error; err != nil {
+		if err == gorm.ErrRecordNotFound {
+			return fiber.NewError(fiber.StatusNotFound, "Rezept nicht gefunden")
+		}
+		return fiber.NewError(fiber.StatusInternalServerError, "Fehler beim Laden des Rezepts: "+err.Error())
+	}
+
+	if err := handler.db.Delete(&rezept).Error; err != nil {
+		return fiber.NewError(fiber.StatusInternalServerError, "Fehler beim Löschen: "+err.Error())
+	}
+
+	logging.Info("rezept gelöscht", "id", id, "name", rezept.Name)
+
+	return ctx.JSON(schema.DeleteRezeptResponse{
+		Success: true,
+		Message: "Rezept erfolgreich gelöscht",
+	})
+}

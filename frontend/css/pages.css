@@ -539,7 +539,8 @@
 /* -----------------------------------------------------------------------
    Lösch-Bestätigung
    ----------------------------------------------------------------------- */
-.confirm-delete {
+.confirm-delete,
+.confirm-dialog {
     text-align: center;
 }
 
@@ -550,6 +551,14 @@
 }
 
 .confirm-delete p {
+    margin-bottom: var(--spacing-sm);
+}
+
+.confirm-dialog .confirm-icon {
+    color: var(--primary);
+}
+
+.confirm-dialog p {
     margin-bottom: var(--spacing-sm);
 }
 
@@ -1060,6 +1069,33 @@
     font-size: 0.8rem;
     color: var(--on-surface-variant);
     white-space: nowrap;
+}
+
+.gespeichert-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.gespeichert-delete-btn {
+    flex-shrink: 0;
+    padding: var(--spacing-xs);
+    background-color: transparent;
+    border: none;
+    color: var(--error);
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+}
+
+.gespeichert-delete-btn:hover {
+    background-color: rgba(244, 67, 54, 0.1);
+    color: var(--error);
+}
+
+.gespeichert-delete-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
 .gespeichert-empty {

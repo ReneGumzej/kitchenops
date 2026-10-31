@@ -202,3 +202,9 @@ type SaveRezeptResponse struct {
 	Message string `json:"message"`
 	ID      uint   `json:"id"`
 }
+
+// DeleteRezeptResponse bestätigt das Löschen eines Rezepts.
+type DeleteRezeptResponse struct {
+	Success bool   `json:"success"`
+	Message string `json:"message"`
+}

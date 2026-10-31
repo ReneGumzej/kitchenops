@@ -274,6 +274,17 @@ class KitchenOpsAPI {
         return this.request('/rezepte');
     }
 
+    /**
+     * Löscht ein gespeichertes Rezept
+     * @param {number} id - Rezept-ID
+     * @returns {Promise<Object>} - {success, message}
+     */
+    async deleteRezept(id) {
+        return this.request(`/rezepte/${id}`, {
+            method: 'DELETE'
+        });
+    }
+
     // =========================================================================
     // HILFSFUNKTIONEN
     // =========================================================================

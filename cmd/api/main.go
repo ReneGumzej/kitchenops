@@ -114,6 +114,7 @@ func main()  {
 	app.Get("/rezepte", rezeptHandler.GetAllRezepte)
 	app.Post("/rezepte", rezeptHandler.SaveRezept)
 	app.Post("/rezepte/generieren", rezeptHandler.GenerateRezepte)
+	app.Delete("/rezepte/:id", rezeptHandler.DeleteRezeptByID)
 
 	logging.Info("server startet", "adresse", "http://0.0.0.0:3000")
 	if err := app.Listen(":3000"); err != nil {

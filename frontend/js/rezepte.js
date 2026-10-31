@@ -475,6 +475,35 @@ async function loadGespeicherte() {
     }
 }
 
+// Löscht ein gespeichertes Rezept nach Bestätigung
+async function deleteRezept(id) {
+    const rezept = gespeicherteListe.find(r => r.id === id);
+    const name = rezept ? rezept.name : 'Rezept';
+
+    if (!await UI.confirm(`Möchten Sie das Rezept "${name}" wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.`)) {
+        return;
+    }
+
+    const btn = document.querySelector(`[data-id="${id}"]`);
+    if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Lösche...';
+    }
+
+    try {
+        const result = await api.deleteRezept(id);
+        Toast.success(result?.message || 'Rezept erfolgreich gelöscht');
+        Modal.close();
+        await loadGespeicherte();
+    } catch (error) {
+        Toast.error(`Fehler beim Löschen: ${error.message}`);
+        if (btn) {
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-trash"></i>';
+        }
+    }
+}
+
 function renderGespeicherte() {
     const container = document.getElementById('gespeicherteRezepte');
 
@@ -504,14 +533,33 @@ function renderGespeicherte() {
                         ${(r.zutaten || []).length > 6 ? `<span class="rezept-meta-chip">+${(r.zutaten || []).length - 6} weitere</span>` : ''}
                     </div>` : ''}
             </div>
-            <div class="gespeichert-datum">${UI.formatDate(r.created_at)}</div>
+            <div class="gespeichert-actions">
+                <button type="button" class="btn-icon btn-danger gespeichert-delete-btn" title="Rezept löschen"
+                        data-id="${r.id}">
+                    <i class="fas fa-trash"></i>
+                </button>
+                <div class="gespeichert-datum">${UI.formatDate(r.created_at)}</div>
+            </div>
         </div>
     `).join('');
 
-    // Klick öffnet das Rezept im KI-Format
+    // Klick auf den Item-Körper öffnet das Rezept
     container.querySelectorAll('.gespeichert-item').forEach(item => {
-        item.addEventListener('click', () => {
+        item.addEventListener('click', (e) => {
+            // Nicht reagieren, wenn der Delete-Button angeklickt wurde
+            if (e.target.closest('.gespeichert-delete-btn')) {
+                return;
+            }
             openGespeichert(parseInt(item.dataset.index, 10));
+        });
+    });
+
+    // Klick auf den Delete-Button löscht das Rezept
+    container.querySelectorAll('.gespeichert-delete-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const id = parseInt(btn.dataset.id, 10);
+            deleteRezept(id);
         });
     });
 }
@@ -531,9 +579,20 @@ function openGespeichert(index) {
             saveButton: false,
             gespeichertAm: r.created_at
         }),
-        footer: '<button type="button" class="btn btn-outline" id="gespeichertCloseBtn"><i class="fas fa-xmark"></i> Schließen</button>',
+        footer: `
+            <button type="button" class="btn btn-danger" id="rezeptDeleteBtn" data-id="${r.id}">
+                <i class="fas fa-trash"></i> Rezept löschen
+            </button>
+            <button type="button" class="btn btn-outline" id="gespeichertCloseBtn">
+                <i class="fas fa-xmark"></i> Schließen
+            </button>
+        `,
         onClose: () => modalEl.classList.remove('modal-breit')
     });
 
     document.getElementById('gespeichertCloseBtn').addEventListener('click', () => Modal.close());
+    document.getElementById('rezeptDeleteBtn').addEventListener('click', () => {
+        const id = parseInt(document.getElementById('rezeptDeleteBtn').dataset.id, 10);
+        deleteRezept(id);
+    });
 }
