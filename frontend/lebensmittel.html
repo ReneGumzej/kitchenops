@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KitchenOps - Lebensmittel</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/pages.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div id="app">
+        <button class="mobile-nav-toggle" id="mobileNavToggle">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-utensils"></i>
+                    <h1>KitchenOps</h1>
+                </a>
+                <button class="sidebar-close" id="sidebarClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="index.html" class="nav-link" data-page="dashboard">
+                    <i class="fas fa-home"></i><span>Dashboard</span>
+                </a>
+                <a href="lebensmittel.html" class="nav-link" data-page="lebensmittel">
+                    <i class="fas fa-box-open"></i><span>Lebensmittel</span>
+                </a>
+                <a href="rezepte.html" class="nav-link" data-page="rezepte">
+                    <i class="fas fa-kitchen-set"></i><span>Rezepte</span>
+                </a>
+                <a href="einkaufsliste.html" class="nav-link" data-page="einkaufsliste">
+                    <i class="fas fa-shopping-cart"></i><span>Einkaufsliste</span>
+                </a>
+                <a href="inventar.html" class="nav-link" data-page="inventar">
+                    <i class="fas fa-clipboard-list"></i><span>Inventar</span>
+                </a>
+                <a href="einstellungen.html" class="nav-link" data-page="einstellungen">
+                    <i class="fas fa-cog"></i><span>Einstellungen</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-bar">
+                <div class="top-bar-left">
+                    <button class="sidebar-toggle" id="sidebarToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="breadcrumb"><span>Lebensmittel</span></div>
+                </div>
+                <div class="top-bar-right">
+                    <div class="search-box">
+                        <input type="text" id="globalSearch" placeholder="Suche...">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <div class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></div>
+                </div>
+            </header>
+
+            <div class="page-content">
+                <div class="page">
+                    <div class="page-header">
+                        <div>
+                            <h1>Lebensmittel</h1>
+                            <p class="text-muted">Verwalten Sie alle Ihre Vorräte</p>
+                        </div>
+                        <button class="btn btn-primary" id="addLebensmittelBtn">
+                            <i class="fas fa-plus"></i> Neues Lebensmittel
+                        </button>
+                        <button class="btn btn-outline" id="kategorisierenBtn" title="Kategorien per Regeln und KI zuordnen">
+                            <i class="fas fa-wand-magic-sparkles"></i> Auto-Kategorisieren
+                        </button>
+                    </div>
+
+                    <!-- KI-Schnellerfassung -->
+                    <div class="card ki-erfassung">
+                        <div class="card-header">
+                            <h3><i class="fas fa-wand-magic-sparkles text-primary"></i> Schnell-Erfassung (KI)</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <textarea id="kiErfassungText" class="form-control form-textarea"
+                                    placeholder='z.B. "Füge mir Brot, Butter, Eier und zwei mal Sahne hinzu" oder "Füge Hähnchen hinzu und packe es ins Gefrierfach"'></textarea>
+                            </div>
+                            <div class="generator-footer">
+                                <p class="text-muted text-sm">
+                                    Freitext - die KI extrahiert Lebensmittel, Mengen und Einheiten.
+                                    Ohne Mengenangabe gilt 1 Stück. Gefrierfach-Hinweise werden erkannt.
+                                </p>
+                                <button type="button" class="btn btn-primary" id="kiErfassungBtn">
+                                    <i class="fas fa-wand-magic-sparkles"></i> Erfassen
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Toolbar: Suche, Filter, Ansicht -->
+                    <div class="card toolbar">
+                        <div class="toolbar-row">
+                            <div class="search-box toolbar-search">
+                                <input type="text" id="lmSearch" placeholder="Lebensmittel suchen (Name, Einheit)...">
+                                <i class="fas fa-search"></i>
+                            </div>
+                            <div class="view-toggle" id="viewToggle">
+                                <button class="view-btn active" data-view="grid" title="Kartenansicht">
+                                    <i class="fas fa-grip"></i>
+                                </button>
+                                <button class="view-btn" data-view="table" title="Tabellenansicht">
+                                    <i class="fas fa-table-list"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="toolbar-row">
+                            <div class="filter-chips">
+                                <button class="chip active" data-filter="all">Alle</button>
+                                <button class="chip" data-filter="low"><i class="fas fa-arrow-trend-down"></i> Niedrig</button>
+                                <button class="chip" data-filter="critical"><i class="fas fa-triangle-exclamation"></i> Kritisch</button>
+                                <button class="chip" data-filter="purchase"><i class="fas fa-cart-plus"></i> Einkaufsliste</button>
+                            </div>
+                            <span class="result-count" id="resultCount"></span>
+                        </div>
+                    </div>
+
+                    <!-- Listen-Ausgabe -->
+                    <div id="lmGrid" class="lebensmittel-grid"></div>
+                    <div id="lmTableWrap" class="table-container hidden">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Menge</th>
+                                    <th>Einheit</th>
+                                    <th>Kategorie</th>
+                                    <th>Bestand</th>
+                                    <th>Aktionen</th>
+                                </tr>
+                            </thead>
+                            <tbody id="lmTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Toast / Modal / Loading -->
+    <div class="toast-container" id="toastContainer"></div>
+    <div class="modal-overlay hidden" id="modalOverlay">
+        <div class="modal" id="modal">
+            <div class="modal-header">
+                <h2 id="modalTitle"></h2>
+                <button class="modal-close" id="modalClose"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body" id="modalBody"></div>
+            <div class="modal-footer" id="modalFooter"></div>
+        </div>
+    </div>
+    <div class="loading-overlay hidden" id="loadingOverlay">
+        <div class="spinner"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/lebensmittel.js"></script>
+</body>
+</html>

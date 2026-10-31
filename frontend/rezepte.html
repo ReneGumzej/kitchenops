@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KitchenOps - Rezepte</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/pages.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div id="app">
+        <button class="mobile-nav-toggle" id="mobileNavToggle">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-utensils"></i>
+                    <h1>KitchenOps</h1>
+                </a>
+                <button class="sidebar-close" id="sidebarClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="index.html" class="nav-link" data-page="dashboard">
+                    <i class="fas fa-home"></i><span>Dashboard</span>
+                </a>
+                <a href="lebensmittel.html" class="nav-link" data-page="lebensmittel">
+                    <i class="fas fa-box-open"></i><span>Lebensmittel</span>
+                </a>
+                <a href="rezepte.html" class="nav-link" data-page="rezepte">
+                    <i class="fas fa-kitchen-set"></i><span>Rezepte</span>
+                </a>
+                <a href="einkaufsliste.html" class="nav-link" data-page="einkaufsliste">
+                    <i class="fas fa-shopping-cart"></i><span>Einkaufsliste</span>
+                </a>
+                <a href="inventar.html" class="nav-link" data-page="inventar">
+                    <i class="fas fa-clipboard-list"></i><span>Inventar</span>
+                </a>
+                <a href="einstellungen.html" class="nav-link" data-page="einstellungen">
+                    <i class="fas fa-cog"></i><span>Einstellungen</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-bar">
+                <div class="top-bar-left">
+                    <button class="sidebar-toggle" id="sidebarToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="breadcrumb"><span>Rezepte</span></div>
+                </div>
+                <div class="top-bar-right">
+                    <div class="search-box">
+                        <input type="text" id="globalSearch" placeholder="Suche...">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <div class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></div>
+                </div>
+            </header>
+
+            <div class="page-content">
+                <div class="page">
+                    <div class="page-header">
+                        <div>
+                            <h1>Rezepte</h1>
+                            <p class="text-muted">KI-gestützte Rezeptvorschläge auf Basis Ihres Inventars</p>
+                        </div>
+                    </div>
+
+                    <!-- Generator -->
+                    <div class="card rezept-generator">
+                        <div class="card-header">
+                            <h3><i class="fas fa-wand-magic-sparkles text-primary"></i> Rezept-Ideen generieren</h3>
+                        </div>
+                        <div class="card-body">
+                            <!-- Essenskategorie -->
+                            <div class="generator-section">
+                                <label class="generator-label">Mahlzeit</label>
+                                <div class="choice-chips" id="essensKategorieChips">
+                                    <button class="choice-chip" data-value="Frühstück"><i class="fas fa-mug-hot"></i> Frühstück</button>
+                                    <button class="choice-chip" data-value="Mittagessen"><i class="fas fa-sun"></i> Mittagessen</button>
+                                    <button class="choice-chip" data-value="Abendessen"><i class="fas fa-moon"></i> Abendessen</button>
+                                    <button class="choice-chip" data-value="Snack"><i class="fas fa-cookie-bite"></i> Snack</button>
+                                </div>
+                            </div>
+
+                            <!-- Lebensmittelkategorie -->
+                            <div class="generator-section">
+                                <label class="generator-label">Küchenrichtung</label>
+                                <div class="choice-chips" id="lebensmittelKategorieChips">
+                                    <button class="choice-chip" data-value="Pasta"><i class="fas fa-plate-wheat"></i> Pasta</button>
+                                    <button class="choice-chip" data-value="Rindfleisch"><i class="fas fa-drumstick-bite"></i> Rindfleisch</button>
+                                    <button class="choice-chip" data-value="Hühnerfleisch"><i class="fas fa-drumstick"></i> Hühnerfleisch</button>
+                                    <button class="choice-chip" data-value="Schweinefleisch"><i class="fas fa-bacon"></i> Schweinefleisch</button>
+                                    <button class="choice-chip" data-value="Vegetarisch"><i class="fas fa-leaf"></i> Vegetarisch</button>
+                                    <button class="choice-chip" data-value="Vegan"><i class="fas fa-seedling"></i> Vegan</button>
+                                    <button class="choice-chip" data-value="Salat"><i class="fas fa-plate-wheat"></i> Salat</button>
+                                </div>
+                            </div>
+
+                            <!-- Anzahl -->
+                            <div class="generator-section">
+                                <label class="generator-label">Anzahl Rezepte</label>
+                                <div class="choice-chips" id="anzahlChips">
+                                    <button class="choice-chip" data-value="1">1</button>
+                                    <button class="choice-chip" data-value="2">2</button>
+                                    <button class="choice-chip" data-value="3">3</button>
+                                </div>
+                            </div>
+
+                            <!-- Freier Wunsch-Text -->
+                            <div class="generator-section">
+                                <label class="generator-label" for="rezeptPrompt">
+                                    Freier Wunsch <span class="text-muted text-sm">(optional)</span>
+                                </label>
+                                <textarea id="rezeptPrompt" class="form-control form-textarea"
+                                    placeholder='z.B. "Bitte erstelle mir zum Frühstück ein vegetarisches und ein fleischlastiges Gericht"'></textarea>
+                            </div>
+
+                            <div class="generator-footer">
+                                <p class="text-muted text-sm generator-hint" id="inventarHint"></p>
+                                <button class="btn btn-primary btn-lg" id="generateBtn">
+                                    <i class="fas fa-wand-magic-sparkles"></i> Rezepte generieren
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- KI-Antwort: Ladezustand -->
+                    <div class="ki-loading hidden" id="kiLoading">
+                        <div class="ki-loading-icon">
+                            <i class="fas fa-utensils fa-spin"></i>
+                        </div>
+                        <div class="ki-loading-text">
+                            <h3>Die Küchen-KI denkt nach...</h3>
+                            <p class="text-muted">Ihr Inventar wird analysiert und passenden Rezepten zugeordnet. Das kann bis zu einer Minute dauern.</p>
+                        </div>
+                    </div>
+
+                    <!-- Generierte Rezepte -->
+                    <div id="rezeptErgebnisse"></div>
+
+                    <!-- Gespeicherte Rezepte -->
+                    <div class="mt-xl">
+                        <h2><i class="fas fa-book text-secondary"></i> Gespeicherte Rezepte</h2>
+                        <div id="gespeicherteRezepte" class="gespeichert-liste"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Toast / Modal / Loading -->
+    <div class="toast-container" id="toastContainer"></div>
+    <div class="modal-overlay hidden" id="modalOverlay">
+        <div class="modal" id="modal">
+            <div class="modal-header">
+                <h2 id="modalTitle"></h2>
+                <button class="modal-close" id="modalClose"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body" id="modalBody"></div>
+            <div class="modal-footer" id="modalFooter"></div>
+        </div>
+    </div>
+    <div class="loading-overlay hidden" id="loadingOverlay">
+        <div class="spinner"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/rezepte.js"></script>
+</body>
+</html>

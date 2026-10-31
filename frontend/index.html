@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KitchenOps - Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/pages.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div id="app">
+        <button class="mobile-nav-toggle" id="mobileNavToggle">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-utensils"></i>
+                    <h1>KitchenOps</h1>
+                </a>
+                <button class="sidebar-close" id="sidebarClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="index.html" class="nav-link" data-page="dashboard">
+                    <i class="fas fa-home"></i><span>Dashboard</span>
+                </a>
+                <a href="lebensmittel.html" class="nav-link" data-page="lebensmittel">
+                    <i class="fas fa-box-open"></i><span>Lebensmittel</span>
+                </a>
+                <a href="rezepte.html" class="nav-link" data-page="rezepte">
+                    <i class="fas fa-kitchen-set"></i><span>Rezepte</span>
+                </a>
+                <a href="einkaufsliste.html" class="nav-link" data-page="einkaufsliste">
+                    <i class="fas fa-shopping-cart"></i><span>Einkaufsliste</span>
+                </a>
+                <a href="inventar.html" class="nav-link" data-page="inventar">
+                    <i class="fas fa-clipboard-list"></i><span>Inventar</span>
+                </a>
+                <a href="einstellungen.html" class="nav-link" data-page="einstellungen">
+                    <i class="fas fa-cog"></i><span>Einstellungen</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-bar">
+                <div class="top-bar-left">
+                    <button class="sidebar-toggle" id="sidebarToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="breadcrumb"><span>Dashboard</span></div>
+                </div>
+                <div class="top-bar-right">
+                    <div class="search-box">
+                        <input type="text" id="globalSearch" placeholder="Suche...">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <div class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></div>
+                </div>
+            </header>
+
+            <div class="page-content">
+                <div class="page">
+                    <h1>Willkommen bei KitchenOps</h1>
+                    <p class="text-muted mb-lg">Verwalten Sie Ihre Küchenvorräte einfach und effizient</p>
+
+                    <!-- Verbindungshinweis (falls Backend nicht erreichbar) -->
+                    <div class="connection-banner hidden" id="connectionBanner">
+                        <i class="fas fa-plug-circle-xmark"></i>
+                        <span>Keine Verbindung zum Backend. Bitte in den <a href="einstellungen.html">Einstellungen</a> prüfen.</span>
+                    </div>
+
+                    <!-- Statistiken -->
+                    <div class="stats-grid" id="statsGrid"></div>
+
+                    <!-- Schnellaktionen -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Schnellaktionen</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="quick-actions" id="quickActions"></div>
+                        </div>
+                    </div>
+
+                    <!-- Letzte Lebensmittel -->
+                    <div class="card mt-lg">
+                        <div class="card-header">
+                            <h3>Neueste Lebensmittel</h3>
+                            <a href="lebensmittel.html" class="btn btn-outline-primary btn-sm">Alle anzeigen</a>
+                        </div>
+                        <div class="card-body">
+                            <div class="lebensmittel-grid" id="recentLebensmittel"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Toast / Modal / Loading -->
+    <div class="toast-container" id="toastContainer"></div>
+    <div class="modal-overlay hidden" id="modalOverlay">
+        <div class="modal" id="modal">
+            <div class="modal-header">
+                <h2 id="modalTitle"></h2>
+                <button class="modal-close" id="modalClose"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body" id="modalBody"></div>
+            <div class="modal-footer" id="modalFooter"></div>
+        </div>
+    </div>
+    <div class="loading-overlay hidden" id="loadingOverlay">
+        <div class="spinner"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

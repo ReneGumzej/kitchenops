@@ -1,0 +1,18 @@
+{
+    // VS Code Live Server: Seite NICHT neu laden, wenn das Backend in die
+    // SQLite-Datenbank schreibt (passiert bei jedem POST auf die API).
+    // Ohne diese Ignorier-Liste schließt sich z.B. das Rezept-Modal bei jedem
+    // Klick auf "Zutat zur Einkaufsliste" durch einen Full-Reload.
+    "liveServer.settings.ignoreFiles": [
+        ".git/**",
+        "node_modules/**",
+        "kitchenops.db",
+        "kitchenops.db-journal",
+        "kitchenops.db-wal",
+        "kitchenops.db-shm",
+        "**/*.db",
+        "**/*.db-journal",
+        "**/*.db-wal",
+        "**/*.db-shm"
+    ]
+}

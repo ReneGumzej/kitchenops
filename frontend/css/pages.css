@@ -1,0 +1,1078 @@
+/* ========================================================================
+   KitchenOps - Seitenspezifische Styles
+   Ergänzt css/style.css um Komponenten der Einzelseiten
+   ======================================================================== */
+
+/* -----------------------------------------------------------------------
+   Seitenkopf mit Aktionen
+   ----------------------------------------------------------------------- */
+.page-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-xl);
+    flex-wrap: wrap;
+}
+
+.page-header h1 {
+    margin-bottom: var(--spacing-xs);
+}
+
+.page-header .text-muted {
+    margin-bottom: 0;
+}
+
+/* -----------------------------------------------------------------------
+   Verbindungshinweis (Dashboard)
+   ----------------------------------------------------------------------- */
+.connection-banner {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    background-color: rgba(244, 67, 54, 0.1);
+    border: 1px solid rgba(244, 67, 54, 0.3);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md) var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+    color: var(--error);
+}
+
+.connection-banner a {
+    color: var(--primary);
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+/* -----------------------------------------------------------------------
+   Schnellaktionen (Dashboard)
+   ----------------------------------------------------------------------- */
+.quick-actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: var(--spacing-md);
+}
+
+.quick-action-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-lg);
+    background-color: var(--background);
+    border: 1px solid var(--light-grey);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-fast);
+}
+
+.quick-action-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.quick-action-icon {
+    font-size: 1.4rem;
+    margin-bottom: var(--spacing-xs);
+}
+
+.quick-action-icon.primary { color: var(--primary); }
+.quick-action-icon.secondary { color: var(--secondary); }
+.quick-action-icon.success { color: var(--success); }
+.quick-action-icon.warning { color: var(--warning); }
+
+.quick-action-title {
+    font-weight: 600;
+    color: var(--on-surface);
+}
+
+.quick-action-desc {
+    font-size: 0.85rem;
+    color: var(--on-surface-variant);
+}
+
+/* -----------------------------------------------------------------------
+   Toolbar (Lebensmittel & Inventar)
+   ----------------------------------------------------------------------- */
+.toolbar {
+    margin-bottom: var(--spacing-lg);
+    padding: var(--spacing-md) var(--spacing-lg);
+}
+
+.toolbar-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.toolbar-row + .toolbar-row {
+    margin-top: var(--spacing-md);
+    padding-top: var(--spacing-md);
+    border-top: 1px solid var(--light-grey);
+}
+
+.toolbar-search {
+    flex: 1;
+    min-width: 220px;
+}
+
+.toolbar-search input {
+    width: 100%;
+}
+
+.result-count {
+    font-size: 0.85rem;
+    color: var(--on-surface-variant);
+    white-space: nowrap;
+}
+
+/* Filter-Chips */
+.filter-chips {
+    display: flex;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+}
+
+.chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--radius-full);
+    border: 1px solid var(--light-grey);
+    background-color: var(--surface);
+    color: var(--on-surface-variant);
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all var(--transition-fast);
+}
+
+.chip:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.chip.active {
+    background-color: var(--primary);
+    border-color: var(--primary);
+    color: white;
+}
+
+/* Ansichts-Umschalter (Grid/Tabelle) */
+.view-toggle {
+    display: flex;
+    gap: 2px;
+    background-color: var(--background);
+    border: 1px solid var(--light-grey);
+    border-radius: var(--radius-md);
+    padding: 3px;
+}
+
+.view-btn {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-sm);
+    color: var(--on-surface-variant);
+    font-size: 0.9rem;
+    transition: all var(--transition-fast);
+}
+
+.view-btn.active {
+    background-color: var(--primary);
+    color: white;
+}
+
+/* -----------------------------------------------------------------------
+   Tabellenansicht (Lebensmittel)
+   ----------------------------------------------------------------------- */
+.table-container {
+    background-color: var(--surface);
+}
+
+.cell-name {
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.cell-name:hover span {
+    color: var(--primary);
+}
+
+.row-icon {
+    color: var(--primary);
+    margin-right: var(--spacing-sm);
+}
+
+.table-actions {
+    display: flex;
+    gap: var(--spacing-xs);
+}
+
+.table-actions .btn-icon {
+    width: 32px;
+    height: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    color: var(--on-surface-variant);
+    transition: all var(--transition-fast);
+}
+
+.table-actions .btn-icon:hover {
+    background-color: var(--light-grey);
+    color: var(--on-surface);
+}
+
+.table-actions .delete-btn:hover {
+    background-color: rgba(244, 67, 54, 0.1);
+    color: var(--error);
+}
+
+.table-empty {
+    text-align: center;
+    color: var(--on-surface-variant);
+    padding: var(--spacing-2xl) var(--spacing-md) !important;
+}
+
+/* -----------------------------------------------------------------------
+   Formulare: Zeilen-Layout
+   ----------------------------------------------------------------------- */
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-md);
+}
+
+@media (max-width: 480px) {
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+.modal-footer.no-border {
+    border: none;
+    padding: 0;
+    margin: 0;
+    justify-content: flex-end;
+}
+
+/* Input-Gruppe (Einstellungen) */
+.input-group {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+.input-group .form-control {
+    flex: 1;
+}
+
+/* -----------------------------------------------------------------------
+   Detailansicht (Lebensmittel-Modal)
+   ----------------------------------------------------------------------- */
+.lebensmittel-detail {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.detail-icon {
+    width: 72px;
+    height: 72px;
+    border-radius: var(--radius-lg);
+    background-color: rgba(255, 107, 53, 0.12);
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    margin-bottom: var(--spacing-md);
+}
+
+.detail-hero {
+    display: flex;
+    align-items: baseline;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+}
+
+.detail-amount {
+    font-family: var(--font-display);
+    font-size: 3rem;
+    line-height: 1;
+    color: var(--primary);
+}
+
+.detail-unit {
+    font-size: 1.4rem;
+    color: var(--on-surface-variant);
+}
+
+.detail-progress {
+    width: 100%;
+    margin: 0 0 var(--spacing-sm);
+}
+
+.detail-rows {
+    width: 100%;
+    margin-top: var(--spacing-lg);
+    text-align: left;
+}
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--spacing-sm) 0;
+    border-bottom: 1px solid var(--light-grey);
+}
+
+.detail-row:last-child {
+    border-bottom: none;
+}
+
+.detail-label {
+    color: var(--on-surface-variant);
+    font-size: 0.9rem;
+}
+
+.detail-value {
+    font-weight: 500;
+}
+
+/* -----------------------------------------------------------------------
+   Einkaufsliste
+   ----------------------------------------------------------------------- */
+.stats-grid-compact {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: 420px;
+    margin-bottom: var(--spacing-lg);
+}
+
+.stats-grid-compact .stat-card {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md) var(--spacing-lg);
+}
+
+.stats-grid-compact .stat-card-icon {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 0;
+    font-size: 1.1rem;
+}
+
+.stats-grid-compact .stat-card-value {
+    font-size: 1.5rem;
+    margin-bottom: 0;
+}
+
+.stats-grid-compact .stat-card-label {
+    font-size: 0.75rem;
+}
+
+.einkaufsliste-item.bought .einkaufsliste-name {
+    text-decoration: line-through;
+    color: var(--on-surface-variant);
+}
+
+.einkaufsliste-divider {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    margin: var(--spacing-lg) 0 var(--spacing-sm);
+    padding-top: var(--spacing-md);
+    border-top: 2px dashed var(--light-grey);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--on-surface-variant);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    list-style: none;
+}
+
+.einkaufsliste-item .item-remove:hover {
+    background-color: rgba(244, 67, 54, 0.1);
+    color: var(--error);
+}
+
+.einkaufsliste-item .item-edit {
+    color: var(--success);
+}
+
+/* Vorschlagsliste */
+.suggestion-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.suggestion-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    padding: var(--spacing-sm) var(--spacing-md);
+    background-color: var(--background);
+    border: 1px solid var(--light-grey);
+    border-radius: var(--radius-md);
+}
+
+.suggestion-item .einkaufsliste-info {
+    flex: 1;
+}
+
+.suggestion-empty {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    color: var(--success);
+    background-color: rgba(76, 175, 80, 0.08);
+    border-radius: var(--radius-md);
+}
+
+/* -----------------------------------------------------------------------
+   Inventar: Kategorien
+   ----------------------------------------------------------------------- */
+.kategorie-title {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    margin-bottom: 0;
+}
+
+.kategorie-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+}
+
+.kategorie-stats {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+/* -----------------------------------------------------------------------
+   Einstellungen
+   ----------------------------------------------------------------------- */
+.theme-options {
+    display: flex;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.theme-option {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-lg) var(--spacing-2xl);
+    background-color: var(--background);
+    border: 2px solid var(--light-grey);
+    border-radius: var(--radius-md);
+    color: var(--on-surface-variant);
+    font-weight: 500;
+    transition: all var(--transition-fast);
+}
+
+.theme-option i:first-child {
+    font-size: 1.5rem;
+}
+
+.theme-option:hover {
+    border-color: var(--primary);
+}
+
+.theme-option.selected {
+    border-color: var(--primary);
+    color: var(--primary);
+    background-color: rgba(255, 107, 53, 0.06);
+}
+
+.theme-check {
+    position: absolute;
+    top: var(--spacing-sm);
+    right: var(--spacing-sm);
+    font-size: 0.8rem;
+    color: var(--primary);
+    opacity: 0;
+}
+
+.theme-option.selected .theme-check {
+    opacity: 1;
+}
+
+.data-actions {
+    display: flex;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.data-list {
+    margin: var(--spacing-sm) 0 var(--spacing-md) var(--spacing-lg);
+    color: var(--on-surface-variant);
+}
+
+.about-section {
+    text-align: center;
+    padding: var(--spacing-2xl);
+}
+
+.about-section .logo {
+    justify-content: center;
+}
+
+.about-section h2 {
+    font-family: var(--font-display);
+    color: var(--primary);
+    letter-spacing: 1px;
+}
+
+/* -----------------------------------------------------------------------
+   Lösch-Bestätigung
+   ----------------------------------------------------------------------- */
+.confirm-delete {
+    text-align: center;
+}
+
+.confirm-icon {
+    font-size: 3rem;
+    color: var(--warning);
+    margin-bottom: var(--spacing-md);
+}
+
+.confirm-delete p {
+    margin-bottom: var(--spacing-sm);
+}
+
+/* -----------------------------------------------------------------------
+   Lebensmittel: Kategorien
+   ----------------------------------------------------------------------- */
+.lebensmittel-kategorien {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: var(--spacing-sm);
+}
+
+.lebensmittel-kategorien .rezept-meta-chip {
+    font-size: 0.72rem;
+    padding: 2px 8px;
+}
+
+.kategorie-badge {
+    font-size: 0.72rem;
+}
+
+/* Gefrierfach-Badge (Kühltruhe) */
+.badge-gefrierfach {
+    background-color: rgba(33, 150, 243, 0.15);
+    color: var(--info);
+}
+
+.badge-gefrierfach i {
+    margin-right: 4px;
+}
+
+.gefrierfach-row {
+    color: var(--info);
+    font-size: 0.8rem;
+    margin-left: 6px;
+}
+
+.lm-gefrierfach {
+    display: inline-flex;
+}
+
+.lm-gefrierfach i {
+    color: var(--info);
+}
+
+.mahlzeiten-checkboxen {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+}
+
+.checkbox-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: var(--spacing-xs) var(--spacing-md);
+    border: 2px solid var(--light-grey);
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all var(--transition-fast);
+    user-select: none;
+}
+
+.checkbox-chip input {
+    display: none;
+}
+
+.checkbox-chip span {
+    color: var(--on-surface-variant);
+}
+
+.checkbox-chip:hover {
+    border-color: var(--primary);
+}
+
+.checkbox-chip:has(input:checked) {
+    border-color: var(--primary);
+    background-color: rgba(255, 107, 53, 0.1);
+}
+
+.checkbox-chip:has(input:checked) span {
+    color: var(--primary);
+    font-weight: 500;
+}
+
+/* -----------------------------------------------------------------------
+   Kleine Helfer
+   ----------------------------------------------------------------------- */
+.text-sm {
+    font-size: 0.85rem;
+}
+
+.badge i {
+    margin-right: 4px;
+}
+
+/* -----------------------------------------------------------------------
+   Rezepte-Seite: Generator
+   ----------------------------------------------------------------------- */
+.rezept-generator {
+    margin-bottom: var(--spacing-xl);
+}
+
+.generator-section {
+    margin-bottom: var(--spacing-lg);
+}
+
+.generator-label {
+    display: block;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--on-surface-variant);
+    margin-bottom: var(--spacing-sm);
+}
+
+.choice-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+}
+
+.choice-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border-radius: var(--radius-full);
+    border: 2px solid var(--light-grey);
+    background-color: var(--surface);
+    color: var(--on-surface);
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all var(--transition-fast);
+}
+
+.choice-chip i {
+    font-size: 0.85rem;
+    color: var(--on-surface-variant);
+}
+
+.choice-chip:hover {
+    border-color: var(--primary);
+    transform: translateY(-1px);
+}
+
+.choice-chip.active {
+    border-color: var(--primary);
+    background-color: var(--primary);
+    color: white;
+}
+
+.choice-chip.active i {
+    color: white;
+}
+
+.generator-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+    padding-top: var(--spacing-lg);
+    border-top: 1px solid var(--light-grey);
+}
+
+.generator-hint i {
+    color: var(--primary);
+    margin-right: 4px;
+}
+
+/* KI-Ladezustand */
+.ki-loading {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-lg);
+    padding: var(--spacing-xl);
+    margin-bottom: var(--spacing-xl);
+    background-color: rgba(255, 107, 53, 0.06);
+    border: 1px solid rgba(255, 107, 53, 0.2);
+    border-radius: var(--radius-lg);
+}
+
+.ki-loading-icon {
+    font-size: 2.2rem;
+    color: var(--primary);
+}
+
+.ki-loading-text h3 {
+    margin-bottom: var(--spacing-xs);
+}
+
+.ki-loading-text p {
+    margin-bottom: 0;
+}
+
+/* KI-Fehler */
+.ki-error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-sm);
+    text-align: center;
+    padding: var(--spacing-2xl);
+    margin-bottom: var(--spacing-xl);
+    background-color: rgba(244, 67, 54, 0.06);
+    border: 1px solid rgba(244, 67, 54, 0.25);
+    border-radius: var(--radius-lg);
+}
+
+.ki-error i {
+    font-size: 2rem;
+    color: var(--error);
+}
+
+.ki-error p {
+    max-width: 520px;
+    margin-bottom: 0;
+}
+
+/* -----------------------------------------------------------------------
+   Rezept-Karten
+   ----------------------------------------------------------------------- */
+.rezept-grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+    margin-bottom: var(--spacing-xl);
+}
+
+.rezept-card {
+    background-color: var(--surface);
+    border: 1px solid var(--light-grey);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-xl);
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition-normal);
+}
+
+.rezept-card:hover {
+    box-shadow: var(--shadow-lg);
+}
+
+.rezept-card-header {
+    display: flex;
+    gap: var(--spacing-lg);
+    align-items: flex-start;
+    margin-bottom: var(--spacing-lg);
+}
+
+.rezept-icon {
+    width: 56px;
+    height: 56px;
+    flex-shrink: 0;
+    border-radius: var(--radius-lg);
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+}
+
+.rezept-titel h3 {
+    margin-bottom: var(--spacing-xs);
+    font-size: 1.4rem;
+}
+
+.rezept-titel p {
+    margin-bottom: 0;
+    color: var(--on-surface-variant);
+}
+
+.rezept-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    align-items: center;
+    margin-bottom: var(--spacing-lg);
+}
+
+.rezept-meta-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background-color: var(--background);
+    border: 1px solid var(--light-grey);
+    border-radius: var(--radius-full);
+    font-size: 0.8rem;
+    color: var(--on-surface-variant);
+}
+
+.rezept-meta-chip i {
+    color: var(--primary);
+}
+
+.rezept-sectionen {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-lg);
+}
+
+@media (max-width: 768px) {
+    .rezept-sectionen {
+        grid-template-columns: 1fr;
+    }
+}
+
+.rezept-section {
+    background-color: var(--background);
+    border: 1px solid var(--light-grey);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-lg);
+}
+
+.rezept-section h4 {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+}
+
+.rezept-section h4 i {
+    color: var(--primary);
+}
+
+.zutaten-liste {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.zutaten-liste li {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-size: 0.95rem;
+}
+
+.zutaten-liste li.vorhanden i {
+    color: var(--success);
+}
+
+.zutaten-liste li.fehlt i {
+    color: var(--error);
+}
+
+.zutaten-liste li.fehlt span:first-of-type {
+    color: var(--on-surface-variant);
+}
+
+.zutat-menge {
+    margin-left: auto;
+    font-weight: 500;
+    color: var(--on-surface-variant);
+    white-space: nowrap;
+}
+
+/* Einzel-Button: fehlende Zutat zur Einkaufsliste */
+.zutat-einkauf-btn {
+    flex-shrink: 0;
+    width: 26px;
+    height: 26px;
+    margin-left: var(--spacing-sm);
+    border-radius: var(--radius-sm);
+    background: none;
+    color: var(--secondary);
+    font-size: 0.8rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-fast);
+}
+
+.zutat-einkauf-btn:hover:not(:disabled) {
+    background-color: rgba(78, 205, 196, 0.15);
+    transform: scale(1.1);
+}
+
+.zutat-einkauf-btn:disabled {
+    cursor: default;
+}
+
+.zutat-einkauf-btn.hinzugefuegt {
+    color: var(--success);
+}
+
+.einkauf-hinweis {
+    margin-top: var(--spacing-md);
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.einkauf-hinweis .fa-cart-plus {
+    color: var(--secondary);
+}
+
+.rezept-card-footer {
+    gap: var(--spacing-sm);
+}
+
+.schritte-liste {
+    margin-left: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    font-size: 0.95rem;
+    line-height: 1.55;
+}
+
+.schritte-liste li::marker {
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.rezept-card-footer {
+    margin-top: var(--spacing-lg);
+    padding-top: var(--spacing-lg);
+    border-top: 1px solid var(--light-grey);
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* -----------------------------------------------------------------------
+   Gespeicherte Rezepte
+   ----------------------------------------------------------------------- */
+/* Breiteres Modal für Rezept-Detailansichten */
+.modal-breit {
+    max-width: 960px;
+}
+
+@media (max-width: 768px) {
+    .modal-breit {
+        max-width: 100%;
+        margin: var(--spacing-sm);
+    }
+}
+
+.gespeichert-liste {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-md);
+}
+
+.gespeichert-item {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--spacing-lg);
+    padding: var(--spacing-md) var(--spacing-lg);
+    background-color: var(--surface);
+    border: 1px solid var(--light-grey);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.gespeichert-item:hover {
+    border-color: var(--primary);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
+}
+
+.gespeichert-chevron {
+    font-size: 0.8rem;
+    color: var(--grey);
+    margin-left: var(--spacing-sm);
+    transition: all var(--transition-fast);
+}
+
+.gespeichert-item:hover .gespeichert-chevron {
+    color: var(--primary);
+    transform: translateX(3px);
+}
+
+.gespeichert-info {
+    flex: 1;
+}
+
+.gespeichert-name {
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
+}
+
+.gespeichert-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-sm);
+}
+
+.gespeichert-zutaten {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.gespeichert-datum {
+    font-size: 0.8rem;
+    color: var(--on-surface-variant);
+    white-space: nowrap;
+}
+
+.gespeichert-empty {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-lg);
+    color: var(--on-surface-variant);
+    background-color: var(--background);
+    border: 1px dashed var(--light-grey);
+    border-radius: var(--radius-md);
+}
+
+.gespeichert-empty i {
+    color: var(--primary);
+}

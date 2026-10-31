@@ -1,0 +1,31 @@
+# ============================================================================
+# KitchenOps - .gitignore
+# ============================================================================
+
+# --- Geheimnisse (NIEMALS committen) ---
+.env
+.env.*
+!.env.example
+
+# --- Datenbank (jeder Clone erhält seine eigene, beim Start automatisch
+#     angelegte Datenbank) ---
+data/
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+kitchenops.db
+
+# --- Build-Artefakte ---
+api
+*.exe
+*.test
+*.out
+
+# --- IDE / Editor ---
+.idea/
+*.iml
+.DS_Store
+
+# --- Logs ---
+*.log

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KitchenOps - Einstellungen</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/pages.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div id="app">
+        <button class="mobile-nav-toggle" id="mobileNavToggle">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-utensils"></i>
+                    <h1>KitchenOps</h1>
+                </a>
+                <button class="sidebar-close" id="sidebarClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="index.html" class="nav-link" data-page="dashboard">
+                    <i class="fas fa-home"></i><span>Dashboard</span>
+                </a>
+                <a href="lebensmittel.html" class="nav-link" data-page="lebensmittel">
+                    <i class="fas fa-box-open"></i><span>Lebensmittel</span>
+                </a>
+                <a href="rezepte.html" class="nav-link" data-page="rezepte">
+                    <i class="fas fa-kitchen-set"></i><span>Rezepte</span>
+                </a>
+                <a href="einkaufsliste.html" class="nav-link" data-page="einkaufsliste">
+                    <i class="fas fa-shopping-cart"></i><span>Einkaufsliste</span>
+                </a>
+                <a href="inventar.html" class="nav-link" data-page="inventar">
+                    <i class="fas fa-clipboard-list"></i><span>Inventar</span>
+                </a>
+                <a href="einstellungen.html" class="nav-link" data-page="einstellungen">
+                    <i class="fas fa-cog"></i><span>Einstellungen</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-bar">
+                <div class="top-bar-left">
+                    <button class="sidebar-toggle" id="sidebarToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="breadcrumb"><span>Einstellungen</span></div>
+                </div>
+                <div class="top-bar-right">
+                    <div class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></div>
+                </div>
+            </header>
+
+            <div class="page-content">
+                <div class="page">
+                    <h1>Einstellungen</h1>
+                    <p class="text-muted mb-lg">Konfiguration der App und der Server-Verbindung</p>
+
+                    <!-- Server-Verbindung -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-server text-primary"></i> Server-Verbindung</h3>
+                            <span class="badge badge-error" id="connectionStatus">
+                                <i class="fas fa-circle-notch fa-spin"></i> Prüfen...
+                            </span>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="serverUrlInput">Backend-URL</label>
+                                <div class="input-group">
+                                    <input type="text" id="serverUrlInput" class="form-control"
+                                           placeholder="http://localhost:3000" spellcheck="false">
+                                    <button class="btn btn-primary" id="saveServerBtn">
+                                        <i class="fas fa-floppy-disk"></i> Speichern
+                                    </button>
+                                    <button class="btn btn-outline" id="testConnectionBtn">
+                                        <i class="fas fa-plug"></i> Testen
+                                    </button>
+                                </div>
+                                <p class="text-muted text-sm mt-sm">
+                                    <i class="fas fa-circle-info"></i>
+                                    Das Go-Backend muss CORS-Anfragen von dieser URL erlauben.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Design -->
+                    <div class="card mt-lg">
+                        <div class="card-header">
+                            <h3><i class="fas fa-palette text-secondary"></i> Design</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="theme-options">
+                                <button class="theme-option" data-theme="light" id="themeLight">
+                                    <i class="fas fa-sun"></i>
+                                    <span>Hell</span>
+                                    <i class="fas fa-check theme-check"></i>
+                                </button>
+                                <button class="theme-option" data-theme="dark" id="themeDark">
+                                    <i class="fas fa-moon"></i>
+                                    <span>Dunkel</span>
+                                    <i class="fas fa-check theme-check"></i>
+                                </button>
+                                <button class="theme-option" data-theme="system" id="themeSystem">
+                                    <i class="fas fa-desktop"></i>
+                                    <span>System</span>
+                                    <i class="fas fa-check theme-check"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bestands-Schwellenwerte -->
+                    <div class="card mt-lg">
+                        <div class="card-header">
+                            <h3><i class="fas fa-gauge-high text-warning"></i> Bestands-Warnungen</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="lowThresholdInput">Niedriger Bestand ab</label>
+                                    <input type="number" id="lowThresholdInput" class="form-control" min="1">
+                                    <p class="text-muted text-sm">Darunter wird der Bestand gelb markiert.</p>
+                                </div>
+                                <div class="form-group">
+                                    <label for="criticalThresholdInput">Kritischer Bestand ab</label>
+                                    <input type="number" id="criticalThresholdInput" class="form-control" min="0">
+                                    <p class="text-muted text-sm">Darunter wird der Bestand rot markiert.</p>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary" id="saveThresholdsBtn">
+                                <i class="fas fa-floppy-disk"></i> Speichern
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Daten -->
+                    <div class="card mt-lg">
+                        <div class="card-header">
+                            <h3><i class="fas fa-database text-success"></i> Daten</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="data-actions">
+                                <button class="btn btn-outline" id="reloadDataBtn">
+                                    <i class="fas fa-rotate"></i> Daten neu laden
+                                </button>
+                                <button class="btn btn-outline" id="clearLocalDataBtn">
+                                    <i class="fas fa-broom"></i> Lokale Daten löschen
+                                </button>
+                            </div>
+                            <p class="text-muted text-sm mt-md">
+                                <i class="fas fa-circle-info"></i>
+                                Lokale Daten umfassen Theme, Einkaufsliste, Ansichtseinstellungen und Schwellenwerte.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Über -->
+                    <div class="card mt-lg">
+                        <div class="card-body about-section">
+                            <div class="logo">
+                                <i class="fas fa-utensils"></i>
+                                <h2>KitchenOps</h2>
+                            </div>
+                            <p class="text-muted">Version 1.0.0</p>
+                            <p class="text-muted">Moderner Küchenverwaltung - Frontend: HTML/CSS/JS · Backend: Go/Fiber/PostgreSQL</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Toast / Modal / Loading -->
+    <div class="toast-container" id="toastContainer"></div>
+    <div class="modal-overlay hidden" id="modalOverlay">
+        <div class="modal" id="modal">
+            <div class="modal-header">
+                <h2 id="modalTitle"></h2>
+                <button class="modal-close" id="modalClose"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body" id="modalBody"></div>
+            <div class="modal-footer" id="modalFooter"></div>
+        </div>
+    </div>
+    <div class="loading-overlay hidden" id="loadingOverlay">
+        <div class="spinner"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/einstellungen.js"></script>
+</body>
+</html>
