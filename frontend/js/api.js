@@ -179,6 +179,19 @@ class KitchenOpsAPI {
         });
     }
 
+    /**
+     * Erfasst Einkaufsartikel per Freitext über die KI
+     * (z.B. "Füge mir Milch, Eier und zwei Packungen Mehl hinzu")
+     * @param {string} text - Freitext
+     * @returns {Promise<Object>} - {artikel: [...]} der erfassten Artikel
+     */
+    async erfasseEinkaufsartikel(text) {
+        return this.request('/einkaufsliste/erfassen', {
+            method: 'POST',
+            body: JSON.stringify({ text })
+        });
+    }
+
     // =========================================================================
     // EINKAUFSLISTE ENDPOINTS
     // =========================================================================

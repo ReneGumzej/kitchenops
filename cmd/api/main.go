@@ -88,8 +88,9 @@ func main()  {
 	}
 	logging.Info("migration abgeschlossen")
 
-	dbHandler := api.NewDatabaseHandler(db)
-	rezeptHandler := api.NewRezeptHandler(db, llm.NewClient())
+	llmClient := llm.NewClient()
+	dbHandler := api.NewDatabaseHandler(db, llmClient)
+	rezeptHandler := api.NewRezeptHandler(db, llmClient)
 
 	// API
 
@@ -109,6 +110,7 @@ func main()  {
 	app.Put("/einkaufsliste/:id", dbHandler.UpdateEinkaufsartikel)
 	app.Delete("/einkaufsliste/:id", dbHandler.DeleteEinkaufsartikelByID)
 	app.Delete("/einkaufsliste", dbHandler.ClearEinkaufsliste)
+	app.Post("/einkaufsliste/erfassen", dbHandler.ErfasseEinkaufsartikelPerText)
 
 	// Rezepte
 	app.Get("/rezepte", rezeptHandler.GetAllRezepte)

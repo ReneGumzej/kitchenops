@@ -34,7 +34,7 @@ func setupTestDB() *gorm.DB {
 // createTestApp erstellt eine Fiber-App mit dem DatabaseHandler für Tests
 func createTestApp(db *gorm.DB) *fiber.App {
 	app := fiber.New()
-	dbHandler := NewDatabaseHandler(db)
+	dbHandler := NewDatabaseHandler(db, nil)
 
 	// Routen registrieren
 	app.Get("/lebensmittel", dbHandler.GetAllLebensmittel)

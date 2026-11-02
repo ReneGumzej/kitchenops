@@ -23,7 +23,7 @@ func setupEinkaufsApp(db *gorm.DB) *fiber.App {
 	}
 
 	app := fiber.New()
-	dbHandler := NewDatabaseHandler(db)
+	dbHandler := NewDatabaseHandler(db, nil)
 
 	app.Post("/einkaufsliste", dbHandler.CreateEinkaufsartikel)
 	app.Put("/einkaufsliste/:id", dbHandler.UpdateEinkaufsartikel)

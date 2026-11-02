@@ -4,25 +4,28 @@ import (
 	"fmt"
 	"math"
 	"strings"
+	"time"
 
 	"github.com/gofiber/fiber/v3"
-	"gitlab.com/ReneGumzej/kitchenops/pkg/utils"
-	"gitlab.com/ReneGumzej/kitchenops/pkg/schema"
+	"gitlab.com/ReneGumzej/kitchenops/pkg/llm"
 	"gitlab.com/ReneGumzej/kitchenops/pkg/logging"
 	"gitlab.com/ReneGumzej/kitchenops/pkg/models"
+	"gitlab.com/ReneGumzej/kitchenops/pkg/schema"
+	"gitlab.com/ReneGumzej/kitchenops/pkg/utils"
 	"gorm.io/gorm"
-
 )
 
 // Handlers
 
 type DatabaseHandler struct {
-	db *gorm.DB
+	db  *gorm.DB
+	llm *llm.Client
 }
 
-func NewDatabaseHandler(db *gorm.DB) *DatabaseHandler {
+func NewDatabaseHandler(db *gorm.DB, client *llm.Client) *DatabaseHandler {
 	return &DatabaseHandler{
-		db: db,
+		db:  db,
+		llm: client,
 	}
 }
 
@@ -528,3 +531,91 @@ func (handler *DatabaseHandler) ClearEinkaufsliste(ctx fiber.Ctx) error {
 	})
 }
 
+// ErfasseEinkaufsartikelPerText (POST /einkaufsliste/erfassen) liest einen
+// freien Text (z.B. "Füge mir Milch, Butter und zwei mal Sahne hinzu und packe die
+// Eier ins Gefrierfach"), lässt ihn vom LLM strukturieren und trägt die Artikel
+// in die Einkaufsliste ein. Verglichen mit ErfasseLebensmittelPerText:
+// - Es werden Einkaufsartikel statt Lebensmittel angelegt
+// - Keine automatische Gefrierfach-Übertragung ins Inventar
+// - Gefrierfach-Flag wird aus dem Text übernommen
+func (handler *DatabaseHandler) ErfasseEinkaufsartikelPerText(ctx fiber.Ctx) error {
+	request := &schema.EinkaufzettelEingabeRequest{}
+
+	if err := ctx.Bind().Body(request); err != nil {
+		return fiber.NewError(fiber.StatusBadRequest, "Ungültige Anfragedaten: "+err.Error())
+	}
+	if request.Text == "" {
+		return fiber.NewError(fiber.StatusBadRequest, "Bitte geben Sie einen Text ein")
+	}
+	if handler.llm == nil || !handler.llm.Verfügbar() {
+		return fiber.NewError(fiber.StatusServiceUnavailable,
+			"Text-Erfassung nicht konfiguriert: bitte einen API-Key für Ihren LLM-Anbieter als Umgebungsvariable setzen (z.B. MISTRAL_API_KEY, OPENAI_API_KEY, ANTHROPIC_API_KEY, GEMINI_API_KEY)")
+	}
+
+	start := time.Now()
+	eintraege, err := handler.llm.ParseLebensmittelEingabe(request.Text)
+	if err != nil {
+		logging.Error("text-erfassung für einkaufsliste fehlgeschlagen",
+			"text", logging.Kürzen(request.Text, 100), "fehler", err.Error())
+		return fiber.NewError(fiber.StatusBadGateway, "Fehler bei der Text-Erfassung: "+err.Error())
+	}
+	if len(eintraege) == 0 {
+		return fiber.NewError(fiber.StatusUnprocessableEntity, "Im Text wurden keine Artikel erkannt")
+	}
+	logging.Info("text-erfassung für einkaufsliste geparst",
+		"text", logging.Kürzen(request.Text, 100),
+		"erkannt", len(eintraege),
+		"dauer_ms", time.Since(start).Milliseconds(),
+	)
+
+	// Artikel in die Einkaufsliste eintragen
+	ergebnis := make([]models.Einkaufsartikel, 0, len(eintraege))
+	for _, eintrag := range eintraege {
+		// Anzahl: 1 wenn nicht angegeben
+		anzahl := eintrag.Anzahl
+		if anzahl == 0 {
+			anzahl = 1
+		}
+
+		// Dubletten vermeiden: offiziellen Eintrag mit gleichem Namen aktualisieren
+		var existing models.Einkaufsartikel
+		err := handler.db.
+			Where("name = ? AND erledigt = ?", eintrag.Name, false).
+			First(&existing).Error
+
+		if err == nil {
+			// Bestehender offener Artikel: Menge aufaddieren
+			existing.Anzahl += anzahl
+			if err := handler.db.Save(&existing).Error; err != nil {
+				return fiber.NewError(fiber.StatusInternalServerError, "Fehler beim Aktualisieren: "+err.Error())
+			}
+			ergebnis = append(ergebnis, existing)
+			continue
+		}
+
+		// Neuer Artikel
+		artikel := models.Einkaufsartikel{
+			Name:        eintrag.Name,
+			Anzahl:      anzahl,
+			Einheit:     eintrag.Einheit,
+			Notiz:       "",
+			Erledigt:    false,
+			Gefrierfach: eintrag.Gefrierfach,
+		}
+		if err := handler.db.Create(&artikel).Error; err != nil {
+			return fiber.NewError(fiber.StatusInternalServerError, "Fehler beim Erstellen: "+err.Error())
+		}
+		ergebnis = append(ergebnis, artikel)
+	}
+
+	names := make([]string, 0, len(ergebnis))
+	for _, a := range ergebnis {
+		names = append(names, fmt.Sprintf("%s (%d %s)", a.Name, a.Anzahl, a.Einheit))
+	}
+	logging.Info("einkaufsartikel per text erfasst",
+		"anzahl", len(ergebnis),
+		"artikel", strings.Join(names, ", "),
+	)
+
+	return ctx.JSON(convertEinkaufsartikelSliceToListResponse(ergebnis))
+}

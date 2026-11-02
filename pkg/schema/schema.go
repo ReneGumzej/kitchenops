@@ -111,6 +111,10 @@ type DeleteEinkaufsartikelResponse struct {
 	Message string `json:"message"`
 }
 
+type EinkaufzettelEingabeRequest struct {
+	Text string `json:"text"`
+}
+
 // =============================================================================
 // Rezepte
 // =============================================================================
