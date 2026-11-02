@@ -60,6 +60,21 @@ func DatabaseEngine() (*gorm.DB, error){
 		}
 	}
 
+	// SQLite benötigt Schreibrechte auf die Datenbankdatei.
+	// Falls die Datei existiert, aber nicht schreibbar ist (z. B. in Docker
+	// mit gemountetem Volume und falschen Berechtigungen), versuche sie
+	// schreibbar zu machen.
+	if _, err := os.Stat(dbPath); err == nil {
+		if err := os.Chmod(dbPath, 0o666); err != nil {
+			// chmod fehlgeschlagen - versuchen wir es mit chown zum aktuellen User
+			// Das kann in Docker ohne Root-Rechte fehlschlagen, dann ignorieren
+			if err := os.Chown(dbPath, os.Getuid(), os.Getgid()); err != nil {
+				// Ignorieren - möglicherweise läuft der Container als Root
+				// und die Datei gehört einem anderen User
+			}
+		}
+	}
+
 	// GORM-Logging stillschalten: erwartete 404-Suchen ("record not found")
 	// erzeugen sonst Rauschen. Anwendungsfehler werden strukturiert über
 	// pkg/logging protokolliert.
