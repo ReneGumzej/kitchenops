@@ -117,7 +117,11 @@ mDNS (Avahi). Für dauerhafte Auflösung (überlebt Neustarts) einmalig als root
 anlegen:
 
 ```bash
-sudo tee /etc/systemd/system/kitchenops-mdns.service > /dev/null <<'EOF'
+sudo nano /etc/systemd/system/kitchenops-mdns.service 
+```
+folgendes eintragen: 
+
+```bash
 [Unit]
 Description=KitchenOps mDNS-Alias kitchenops.local
 After=avahi-daemon.service
@@ -129,7 +133,8 @@ Restart=on-failure
 
 [Install]
 WantedBy=multi-user.target
-EOF
+```
+```bash
 sudo systemctl daemon-reload
 sudo systemctl enable --now kitchenops-mdns.service
 ```
