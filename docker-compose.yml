@@ -16,7 +16,8 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: kitchenops_backend
-    user: "${UID:-1000}:${GID:-1000}"
+    # User: falls UID/GID gesetzt, mit Host-User laufen; sonst Standard appuser (1000:1000)
+    user: "${UID:+${UID}:${GID}}"
     restart: unless-stopped
     environment:
       # SQLite-Datenbank: liegt im Volume ./data (Container-/dev-gleich)
