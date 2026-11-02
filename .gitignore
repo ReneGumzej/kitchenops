@@ -17,7 +17,7 @@ data/
 kitchenops.db
 
 # --- Build-Artefakte ---
-api
+/api
 bin/
 *.exe
 *.test
