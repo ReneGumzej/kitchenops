@@ -1,37 +1,53 @@
 package api
 
 import (
+	"errors"
 	"time"
 
 	"github.com/gofiber/fiber/v3"
-	"github.com/gofiber/fiber/v3/middleware/requestid"
 
 	"gitlab.com/ReneGumzej/kitchenops/pkg/logging"
 )
 
-// RequestLogger liefert eine Fiber-v3-Middleware, die jede eingehende Anfrage
-// strukturiert über slog protokolliert (Methode, Pfad, Status, Dauer, IP,
-// Request-ID). Fehler aus dem Handler werden mit geloggt.
+// RequestLogger protokolliert jede HTTP-Anfrage strukturiert:
+// Methode, Pfad, Status, Dauer, IP und Request-ID.
+// Fehler aus Handlern (fiber.NewError) werden mit Fehlermeldung auf
+// Error-Ebene geloggt - nicht nur als Statuscode.
+// /health wird ausgespart, um die Logs ruhig zu halten.
 func RequestLogger() fiber.Handler {
-	return func(c fiber.Ctx) error {
+	return func(ctx fiber.Ctx) error {
 		start := time.Now()
 
-		err := c.Next()
+		err := ctx.Next()
 
-		attrs := []any{
-			"method", c.Method(),
-			"path", c.Path(),
-			"status", c.Response().StatusCode(),
-			"duration_ms", time.Since(start).Milliseconds(),
-			"ip", c.IP(),
-			"request_id", requestid.FromContext(c),
-		}
-		if err != nil {
-			attrs = append(attrs, "fehler", err.Error())
-			logging.Error("http request", attrs...)
+		if ctx.Path() == "/health" {
 			return err
 		}
-		logging.Info("http request", attrs...)
-		return nil
+
+		status := ctx.Response().StatusCode()
+		if err != nil {
+			var fiberErr *fiber.Error
+			if errors.As(err, &fiberErr) {
+				status = fiberErr.Code
+			}
+		}
+
+		attrs := []any{
+			"methode", ctx.Method(),
+			"pfad", ctx.Path(),
+			"status", status,
+			"dauer_ms", time.Since(start).Milliseconds(),
+			"ip", ctx.IP(),
+			// Request-ID aus dem Response-Header (fiber v3 setzt keine Locals)
+			"request_id", string(ctx.Response().Header.Peek("X-Request-ID")),
+		}
+
+		if err != nil {
+			attrs = append(attrs, "fehler", err.Error())
+			logging.Error("anfrage fehlgeschlagen", attrs...)
+		} else {
+			logging.Info("anfrage", attrs...)
+		}
+		return err
 	}
 }
