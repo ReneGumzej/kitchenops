@@ -22,8 +22,9 @@ RUN CGO_ENABLED=1 go build -ldflags="-s -w" -o /out/api ./cmd/api
 # --- Stage 2: Laufzeit-Image ---
 FROM alpine:3.21
 
-# tzdata für korrekte Zeitzonen, ca-certificates für HTTPS-Aufrufe (Mistral-API)
-RUN apk add --no-cache tzdata ca-certificates && \
+# tzdata für korrekte Zeitzonen, ca-certificates für HTTPS-Aufrufe (Mistral-API),
+# su-exec zum User-Wechsel im Entrypoint (ohne Passwort)
+RUN apk add --no-cache tzdata ca-certificates su-exec && \
     # User und Gruppe für /data anlegen - UID/GID werden zur Laufzeit
     # über docker-compose.yml gesetzt (Standard: 1000:1000).
     # Falls nicht gesetzt, wird als Root laufen (nicht ideal für gemountete Volumes).
@@ -34,14 +35,18 @@ WORKDIR /data
 
 COPY --from=builder /out/api /usr/local/bin/api
 
-# SQLite-Datenbank liegt im Volume /data (CWD der App)
-# Data-Verzeichnis gehört appuser (UID/GID 1000) für Schreibrechte auf gemountete Volumes
-RUN chown appuser:appgroup /data
+# Entrypoint-Skript: stellt Schreibrechte auf /data sicher
+# - Falls DB-Datei existiert: chmod 0666
+# - Falls /data existiert: chmod 0777
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
 EXPOSE 3000
 
-# Standard-User: appuser (UID 1000, GID 1000)
+# Entrypoint läuft als root, um chmod/chown auf gemountete Volumes
+# ausführen zu können. Das Skript wechselt dann zu appuser.
 # In docker-compose.yml kann der User auf die Host-UID/GID gesetzt werden.
-USER appuser
+USER root
 
-ENTRYPOINT ["api"]
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["api"]
