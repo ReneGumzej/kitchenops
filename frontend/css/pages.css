@@ -1307,3 +1307,28 @@
 .gespeichert-empty i {
     color: var(--primary);
 }
+
+/* AI Text Capture for Einkaufsliste */
+.ai-capture-card {
+    margin-bottom: var(--spacing-lg);
+}
+
+.ai-capture-footer {
+    margin-top: var(--spacing-md);
+    display: flex;
+    justify-content: flex-end;
+}
+
+@media (max-width: 768px) {
+    .ai-capture-footer {
+        justify-content: center;
+    }
+    
+    #einkaufsTextInput {
+        min-height: 80px;
+    }
+    
+    #einkaufsTextErfassenBtn {
+        width: 100%;
+    }
+}

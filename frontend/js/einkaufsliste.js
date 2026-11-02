@@ -49,6 +49,7 @@ async function loadEinkaufsliste() {
 // -------------------------------------------------------------------------
 function bindEvents() {
     document.getElementById('addItemBtn').addEventListener('click', openAddItemModal);
+    document.getElementById('einkaufsTextErfassenBtn').addEventListener('click', erfasseEinkaufsartikelPerText);
 
     document.getElementById('markAllBoughtBtn').addEventListener('click', markAllBought);
 
@@ -410,4 +411,41 @@ function openAddItemModal() {
     });
 
     setTimeout(() => document.getElementById('ekName')?.focus(), 50);
+}
+
+// -------------------------------------------------------------------------
+// KI-Text-Erfassung für Einkaufsartikel
+// -------------------------------------------------------------------------
+async function erfasseEinkaufsartikelPerText() {
+    const textInput = document.getElementById('einkaufsTextInput');
+    const text = textInput.value.trim();
+
+    if (!text) {
+        Toast.warning('Bitte geben Sie einen Text ein');
+        return;
+    }
+
+    const btn = document.getElementById('einkaufsTextErfassenBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Verarbeite...';
+    textInput.disabled = true;
+
+    try {
+        const data = await api.erfasseEinkaufsartikel(text);
+        const artikel = Array.isArray(data?.artikel) ? data.artikel : [];
+        
+        Toast.success(`${artikel.length} Artikel zur Einkaufsliste hinzugefügt`);
+        textInput.value = '';
+        
+        // Liste neu laden
+        await loadEinkaufsliste();
+        render();
+    } catch (error) {
+        Toast.error(`Fehler bei der Text-Erfassung: ${error.message}`);
+    } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-wand-magic-sparkles"></i> Artikel aus Text erfassen';
+        textInput.disabled = false;
+        textInput.focus();
+    }
 }
